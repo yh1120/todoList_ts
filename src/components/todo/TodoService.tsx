@@ -23,12 +23,12 @@ export const useTodo = (): UseTodoReturn => {
   let nextIdState = 0;
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  useEffect(() => {
     saveData();
   }, [todoState]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
@@ -60,10 +60,10 @@ export const useTodo = (): UseTodoReturn => {
   };
 
   const loadData = () => {
-    let data = localStorage.getItem("todos");
-    if (data === undefined || data === null) data = "";
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    initialTodos = JSON.parse(data!);
+    const data = localStorage.getItem("todos");
+    if (data) {
+      initialTodos = JSON.parse(data);
+    }
     if (initialTodos && initialTodos.length >= 1) {
       incrementNextId();
     }
