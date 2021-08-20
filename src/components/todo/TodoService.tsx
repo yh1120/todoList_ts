@@ -36,9 +36,9 @@ export const useTodo = (): UseTodoReturn => {
   const toggleTodo = (id: number) => {
     //@TODO
     setTodoState((prevState) =>
-      prevState.map((state) => {
+      prevState.map((state: Itodo) => {
         if (state.id === id) {
-          state.done === !state.done;
+          state.done = !state.done;
         }
         return state;
       })
@@ -50,7 +50,7 @@ export const useTodo = (): UseTodoReturn => {
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = todoState.length + 1;
+    const nextId = (todoState.length ? todoState[todoState.length - 1].id : 0) + 1;
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
