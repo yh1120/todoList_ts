@@ -61,6 +61,7 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [date, setDate] = useState(moment(new Date()));
+  const [dateString, setDateString] = useState(moment(new Date()).format("YYYY-MM-DD"));
 
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
@@ -72,6 +73,7 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       id: nextId,
       text: value,
       done: false,
+      date: dateString,
     });
     incrementNextId(); // nextId 하나 증가
 
@@ -79,13 +81,12 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
     setOpen(false); // open 닫기
   };
 
-  const handleDate = (value: moment.Moment | null): void => {
+  const handleDate = (value: moment.Moment | null, valueString: string): void => {
     //handleDate
-
     if (value) {
-      console.log(value.date(), value.month(), value.year());
-      console.log(value);
+      console.log(valueString);
       setDate(value);
+      setDateString(valueString);
     }
   };
 
