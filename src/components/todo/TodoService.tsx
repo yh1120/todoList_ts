@@ -8,7 +8,16 @@ export type Itodo = {
 
 let initialTodos: Itodo[] = [];
 
-export const useTodo = () => {
+interface UseTodoReturn {
+  todoState: Itodo[];
+  nextIdState: number;
+  incrementNextId: () => void;
+  toggleTodo: (id: number) => void;
+  removeTodo: (id: number) => void;
+  createTodo: (todo: Itodo) => void;
+}
+
+export const useTodo = (): UseTodoReturn => {
   const [todoState, setTodoState] = useState(initialTodos);
   let nextIdState = 0;
 
@@ -26,12 +35,18 @@ export const useTodo = () => {
 
   const toggleTodo = (id: number) => {
     //@TODO
+    setTodoState((prevState) =>
+      prevState.map((state) => {
+        if (state.id === id) {
+          state.done === !state.done;
+        }
+        return state;
+      })
+    );
   };
 
   const removeTodo = (id: number) => {
-    setTodoState((prevState) =>
-      prevState.filter((todo: Itodo) => todo.id === id)
-    );
+    setTodoState((prevState) => prevState.filter((todo: Itodo) => todo.id !== id));
   };
 
   const createTodo = (todo: Itodo) => {
@@ -39,7 +54,7 @@ export const useTodo = () => {
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextId
+        id: nextId,
       })
     );
   };
@@ -64,6 +79,6 @@ export const useTodo = () => {
     incrementNextId,
     toggleTodo,
     removeTodo,
-    createTodo
+    createTodo,
   };
 };
