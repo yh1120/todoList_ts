@@ -61,7 +61,7 @@ export const useTodo = (): UseTodoReturn => {
 
   const loadData = () => {
     let data = localStorage.getItem("todos");
-    if (data === undefined || null) data = "";
+    if (data === undefined || data === null) data = "";
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     initialTodos = JSON.parse(data!);
     if (initialTodos && initialTodos.length >= 1) {
