@@ -44,8 +44,11 @@ const CheckCircle = styled.div<{ done: boolean }>`
 
 const Text = styled.div<{ done: boolean }>`
   flex: 1;
+  width: 400px;
   font-size: 16px;
   color: #119955;
+  overflow-x: auto;
+  margin-right: 20px;
   ${(props) =>
     props.done &&
     css`
@@ -56,8 +59,8 @@ const Text = styled.div<{ done: boolean }>`
 
 const DateText = styled.div<{ done: boolean }>`
   font-size: 16px;
-  color: #119955;
   padding-right: 10px;
+  color: #119955;
   ${(props) =>
     props.done &&
     css`

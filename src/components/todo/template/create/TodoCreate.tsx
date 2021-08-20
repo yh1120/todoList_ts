@@ -67,17 +67,19 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
+    if (value) {
+      e.preventDefault(); // 새로고침 방지
 
-    createTodo({
-      id: nextId,
-      text: value,
-      done: false,
-      date: dateString,
-    });
-    incrementNextId(); // nextId 하나 증가
+      createTodo({
+        id: nextId,
+        text: value,
+        done: false,
+        date: dateString,
+      });
+      incrementNextId(); // nextId 하나 증가
 
-    setValue(""); // input 초기화
+      setValue(""); // input 초기화
+    }
     setOpen(false); // open 닫기
   };
 
