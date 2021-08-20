@@ -35,7 +35,6 @@ export const useTodo = (): UseTodoReturn => {
   };
 
   const toggleTodo = (id: number) => {
-    //@TODO
     setTodoState((prevState) =>
       prevState.map((state: Itodo) => {
         if (state.id === id) {

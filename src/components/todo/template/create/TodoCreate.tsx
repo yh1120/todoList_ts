@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
-import { DatePicker } from "antd";
+import { Modal, Button, DatePicker } from "antd";
 import moment from "moment";
 
 const CircleButton = styled.button<{ open: boolean }>`
@@ -63,28 +63,32 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const [date, setDate] = useState(moment(new Date()));
   const [dateString, setDateString] = useState(moment(new Date()).format("YYYY-MM-DD"));
 
-  const handleToggle = () => setOpen(!open);
+  const handleToggle = () => {
+    !value && setOpen(!open);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (value) {
-      e.preventDefault(); // 새로고침 방지
-
       createTodo({
         id: nextId,
         text: value,
         done: false,
         date: dateString,
       });
-      incrementNextId(); // nextId 하나 증가
-
-      setValue(""); // input 초기화
+      incrementNextId();
+      setValue("");
+      setOpen(false);
     }
-    setOpen(false); // open 닫기
   };
 
   const handleDate = (value: moment.Moment | null, valueString: string): void => {
-    //handleDate
     if (value) {
       console.log(valueString);
       setDate(value);
@@ -103,6 +107,18 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
           </CircleButton>
         </InsertForm>
       </InsertFormPositioner>
+      <Modal
+        title="Error"
+        visible={open}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Close
+          </Button>,
+        ]}
+      >
+        <p>할 일을 기록해주세요.</p>
+      </Modal>
     </>
   );
 };

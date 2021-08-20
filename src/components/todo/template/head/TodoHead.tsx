@@ -29,7 +29,6 @@ const TimeText = styled.div`
 `;
 
 const TodoHead = () => {
-  //@TODO 현재 시간을 표시해야합니다.
   const today = new Date();
   const dayList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const monthList = ["January", "Fabruary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
