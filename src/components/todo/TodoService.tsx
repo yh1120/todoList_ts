@@ -23,12 +23,12 @@ export const useTodo = (): UseTodoReturn => {
   let nextIdState = 0;
 
   useEffect(() => {
-    saveData();
-  }, [todoState]);
-
-  useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    saveData();
+  }, [todoState]);
 
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
