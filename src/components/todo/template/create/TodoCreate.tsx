@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
-import { Modal, Button, DatePicker } from "antd";
+import { Select, Modal, Button, DatePicker } from "antd";
 import moment from "moment";
+
+const { Option } = Select;
 
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
@@ -32,9 +34,17 @@ const InsertForm = styled.form`
   display: flex;
   background: #eeeeee;
   padding-left: 40px;
-  padding-top: 36px;
+  padding-top: 16px;
   padding-right: 60px;
-  padding-bottom: 36px;
+  padding-bottom: 16px;
+`;
+
+const SelectForm = styled.div`
+  display: flex;
+  background: #eeeeee;
+  padding-left: 40px;
+  padding-right: 60px;
+  padding-bottom: 16px;
 `;
 
 const Input = styled.input`
@@ -55,9 +65,10 @@ interface TodoCreateProps {
   nextId: number;
   createTodo: (todo: Itodo) => void;
   incrementNextId: () => void;
+  changeListState: (state: string) => void;
 }
 
-const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) => {
+const TodoCreate = ({ nextId, createTodo, incrementNextId, changeListState }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [date, setDate] = useState(moment(new Date()));
@@ -90,10 +101,13 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
 
   const handleDate = (value: moment.Moment | null, valueString: string): void => {
     if (value) {
-      console.log(valueString);
       setDate(value);
       setDateString(valueString);
     }
+  };
+
+  const handleChangeList = (value: string) => {
+    changeListState(value);
   };
 
   return (
@@ -106,6 +120,13 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
             <PlusCircleOutlined />
           </CircleButton>
         </InsertForm>
+        <SelectForm>
+          <Select defaultValue="all" style={{ width: 100 }} onChange={handleChangeList}>
+            <Option value="all">전체 목록</Option>
+            <Option value="progress">진행 목록</Option>
+            <Option value="finish">완료 목록</Option>
+          </Select>
+        </SelectForm>
       </InsertFormPositioner>
       <Modal
         title="Error"

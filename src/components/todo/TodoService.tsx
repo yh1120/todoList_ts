@@ -12,14 +12,17 @@ let initialTodos: Itodo[] = [];
 interface UseTodoReturn {
   todoState: Itodo[];
   nextIdState: number;
+  listState: string;
   incrementNextId: () => void;
   toggleTodo: (id: number) => void;
   removeTodo: (id: number) => void;
   createTodo: (todo: Itodo) => void;
+  changeListState: (state: string) => void;
 }
 
 export const useTodo = (): UseTodoReturn => {
   const [todoState, setTodoState] = useState(initialTodos);
+  const [listState, setListState] = useState("all");
   let nextIdState = 0;
 
   useEffect(() => {
@@ -29,6 +32,10 @@ export const useTodo = (): UseTodoReturn => {
   useEffect(() => {
     saveData();
   }, [todoState]);
+
+  const changeListState = (state: string) => {
+    setListState(state);
+  };
 
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
@@ -77,9 +84,11 @@ export const useTodo = (): UseTodoReturn => {
   return {
     todoState,
     nextIdState,
+    listState,
     incrementNextId,
     toggleTodo,
     removeTodo,
     createTodo,
+    changeListState,
   };
 };

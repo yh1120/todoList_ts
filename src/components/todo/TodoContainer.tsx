@@ -7,14 +7,14 @@ import TodoFooter from "./template/footer/TodoFooter";
 import { ReactElement } from "react";
 
 const TodoContainer = (): ReactElement => {
-  const { todoState, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo } = useTodo();
+  const { todoState, nextIdState, listState, incrementNextId, toggleTodo, removeTodo, createTodo, changeListState } = useTodo();
 
   return (
     <>
       <TodoTemplate>
         <TodoHead />
-        <TodoCreate nextId={nextIdState} createTodo={createTodo} incrementNextId={incrementNextId} />
-        <TodoList toggleTodo={toggleTodo} removeTodo={removeTodo} todos={todoState} />
+        <TodoCreate nextId={nextIdState} createTodo={createTodo} incrementNextId={incrementNextId} changeListState={changeListState} />
+        <TodoList toggleTodo={toggleTodo} removeTodo={removeTodo} todos={todoState} listState={listState} />
         <TodoFooter todos={todoState} />
       </TodoTemplate>
     </>
